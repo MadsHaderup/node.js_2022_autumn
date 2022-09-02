@@ -1,0 +1,7 @@
+HTTP Method		Endpoint		Description 
+GET			/pokemon		Returns all pokemon
+GET			/pokemon/{id}		Returns a pokemon by id
+POST			/pokemon		Create a pokemon
+PUT			/pokemon/{id}		Updates the entire pokemon resource by an id
+PATCH			/pokemon/{id}		Updates part of the pokemon resource by an id
+DELETE			/pokemon/{id}		Removes a pokemon by an id
