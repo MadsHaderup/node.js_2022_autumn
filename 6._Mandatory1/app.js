@@ -24,6 +24,7 @@ const firstServerPage = renderPage("/firstServer/firstServer.html");
 const fullCRUDPage = renderPage("/FullCRUDableRESTAPI/FullCRUDableRESTAPIPage.html");
 const ssrPage = renderPage("/SSR/ssrPage.html");
 const servingHTMLPage = renderPage("/servingHTML/servingHTMLPage.html");
+const fetchingAndRedirectingPage = renderPage("/FetchingAndRedirecting/fetchingAndRedirectingPage.html");
 
 
 app.get("/", (req, res) => {
@@ -95,6 +96,10 @@ app.get("/SSR", (req, res) => {
 app.get("/servingHTML", (req, res) => {
     res.send(servingHTMLPage);
 });
+app.get("/fetchingAndRedirecting", (req, res) => {
+    res.send(fetchingAndRedirectingPage);
+});
+
 const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT, (error) => {
