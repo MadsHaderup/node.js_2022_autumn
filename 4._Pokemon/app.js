@@ -1,10 +1,15 @@
 import express from "express";
 const app = express();
 
+app.use(express.urlencoded());
+//app.use(express.json());
 app.use(express.static("public"));
 
 import pokemonRouter from "./routers/pokemonRouter.js";
 app.use(pokemonRouter);
+
+import mailRouter from "./routers/mailRouter.js";
+app.use(mailRouter);
 
 import { renderPage, injectData } from "./util/templateEngine.js";
 
