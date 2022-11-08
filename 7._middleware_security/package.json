@@ -1,0 +1,32 @@
+{
+  "name": "7._middleware_security",
+  "version": "1.0.0",
+  "description": "Defining middleware and express and enhancing our server with security",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadsHaderup/node.js_2022_autumn.git"
+  },
+  "keywords": [
+    "express",
+    "security",
+    "mandatory2"
+  ],
+  "author": "Mads Haderup",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MadsHaderup/node.js_2022_autumn/issues"
+  },
+  "homepage": "https://github.com/MadsHaderup/node.js_2022_autumn#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.6.0",
+    "express-session": "^1.17.3",
+    "helmet": "^6.0.0"
+  }
+}
