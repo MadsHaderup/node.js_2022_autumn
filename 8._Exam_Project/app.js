@@ -1,27 +1,39 @@
-const puppeteer = require("puppeteer");
-const fs = require('fs');
+import express from "express";
+const app = express();
+app.use(express.urlencoded());
 
-(async () => {
-    const browser = await puppeteer.launch();
+import session from "express-session";
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } //kun true hvis der bruges https
+  }))
 
-    const page = await browser.newPage();
-    const templateFooter= fs.readFileSync('template-footer.html', 'utf-8');
+import userRouter from "./routers/userRouter.js";
+app.use(userRouter);
+import pdfRouter from "./routers/pdfRouter.js";
+app.use(pdfRouter);
+import { renderPage, injectDivData } from "./util/templateEngine.js";
+const loginPage = renderPage("/loginPage/loginPage.html");
+const signupPage = renderPage("/loginPage/signupPage.html");
+const frontPage = renderPage("/frontPage/frontPage.html");
+const downloadPage = renderPage("/downloadPage/downloadPage.html");
 
-    const website_url = "https://google.com"
+app.get("/login", (req, res) => {
+    res.send(loginPage);
+});
 
-    await page.goto(website_url, { waitUntil: 'networkidle0'});
-    await page.emulateMediaType('screen');
+app.get("/front", (req, res) => {
+    res.send(frontPage);
+})
 
-    const pdf = await page.pdf({
-      path: "resultfile2.pdf",
-      margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
-      printBackground: true,
-      displayHeaderFooter: true,
-      footerTemplate: templateFooter,
-      format: 'A4',
-    });
-    
+app.get("/signup", (req, res) => {
+    res.send(signupPage);
+});
 
-    await browser.close();
-})();
-
+app.get("/download", (req, res) => {
+    res.send(downloadPage);
+})
+const PORT = 8080 || process.env.PORT;
+app.listen(PORT, () => console.log("Server is running on port", PORT));
