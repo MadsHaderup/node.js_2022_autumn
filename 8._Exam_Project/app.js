@@ -1,39 +1,52 @@
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import rateLimit from "express-rate-limit";
+import dotenv from 'dotenv'
+
+dotenv.config();
 const app = express();
 app.use(express.urlencoded());
+app.use(express.static('public'));
+
+
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: '*' } });
 
 import session from "express-session";
-app.use(session({
-    secret: 'keyboard cat',
+const sessionMiddleware = session({
+    name: "pdfify",
+    secret: 'hej1234abc',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } //kun true hvis der bruges https
-  }))
+    cookie: { 
+        secure: false,
+        maxAge: 600000
+    } 
+});
+app.use(sessionMiddleware);
 
+io.on("connection", function(socket){
+    socket.on("header", (data) => {
+        socket.emit("show hidden text box", data);
+    });
+ });
+
+
+
+const rateLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100
+});
+
+
+app.use(rateLimiter);
 import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
 import pdfRouter from "./routers/pdfRouter.js";
 app.use(pdfRouter);
-import { renderPage, injectDivData } from "./util/templateEngine.js";
-const loginPage = renderPage("/loginPage/loginPage.html");
-const signupPage = renderPage("/loginPage/signupPage.html");
-const frontPage = renderPage("/frontPage/frontPage.html");
-const downloadPage = renderPage("/downloadPage/downloadPage.html");
+import adminRouter from "./routers/adminRouter.js";
+app.use(adminRouter);
 
-app.get("/login", (req, res) => {
-    res.send(loginPage);
-});
-
-app.get("/front", (req, res) => {
-    res.send(frontPage);
-})
-
-app.get("/signup", (req, res) => {
-    res.send(signupPage);
-});
-
-app.get("/download", (req, res) => {
-    res.send(downloadPage);
-})
 const PORT = 8080 || process.env.PORT;
-app.listen(PORT, () => console.log("Server is running on port", PORT));
+server.listen(PORT, () => console.log("Server is running on port", PORT));

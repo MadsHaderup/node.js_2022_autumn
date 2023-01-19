@@ -23,7 +23,7 @@ export function injectData(pageString, data) {
         `<script>const ${variableName} = ${JSON.stringify(data[variableName])}</script></head>` + 
         brokenUpHTML[1];
 }
-export function injectDivData(pageString, data) {
-    const brokenUpDiv = pageString.split("</div>");
-    return brokenUpDiv[0] + data + brokenUpDiv[1];
+export function injectSpanData(pageString, data) {
+    const brokenUpDiv = pageString.split("<span>");
+    return brokenUpDiv[0] + "<span>" + data + brokenUpDiv[1];
 }

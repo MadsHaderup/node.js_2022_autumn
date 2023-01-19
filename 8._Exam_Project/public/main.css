@@ -2,6 +2,7 @@ nav {
     height: 4vh;
     border: 1vh;
     background-color: green;
+    text-align: right;
 }
 
 main {
@@ -26,6 +27,7 @@ h3 {
     text-align: center;
 }
 
+
 .loginContainer {
     display: block;
     text-align: center;
@@ -38,4 +40,11 @@ h3 {
 }
 body {
     background-color:whitesmoke;
+}
+
+#customtext {
+    visibility: hidden;
+}
+#text-label {
+    visibility: hidden;
 }

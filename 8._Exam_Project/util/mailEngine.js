@@ -8,8 +8,8 @@ export async function sendMail(recieveAddress, file, fileName) {
       port: 587,
       secure: false, 
       auth: {
-        user: "madsstudiemail@gmail.com", 
-        pass: "itwvcsnuxqnorquj", 
+        user: "minnodekonto@gmail.com", 
+        pass: process.env.EMAIL_PASSWORD, 
     },
     });
 
@@ -17,14 +17,13 @@ export async function sendMail(recieveAddress, file, fileName) {
     const info = await transporter.sendMail({
         from: '"PDF Generator" <"madsstudiemail@gmail.com">', 
         to: recieveAddress, 
-        subject: "PDF" + fileName, 
-        text: "Hey", 
-        html: "<b>Hello world?</b>", 
+        subject: fileName + ".pdf", 
+        text: "", 
+        html: "<b>Her er din PDF</b>", 
         attachments: [{
             filename: fileName,
             content: file
         }]
     });
-    console.log(info.messageId);
     
 }
