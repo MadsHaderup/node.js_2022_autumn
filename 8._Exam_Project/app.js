@@ -3,6 +3,10 @@ import http from "http";
 import { Server } from "socket.io";
 import rateLimit from "express-rate-limit";
 import dotenv from 'dotenv'
+import session from "express-session";
+import userRouter from "./routers/userRouter.js";
+import pdfRouter from "./routers/pdfRouter.js";
+import adminRouter from "./routers/adminRouter.js";
 
 dotenv.config();
 const app = express();
@@ -13,7 +17,6 @@ app.use(express.static('public'));
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
-import session from "express-session";
 const sessionMiddleware = session({
     name: "pdfify",
     secret: 'hej1234abc',
@@ -41,11 +44,8 @@ const rateLimiter = rateLimit({
 
 
 app.use(rateLimiter);
-import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
-import pdfRouter from "./routers/pdfRouter.js";
 app.use(pdfRouter);
-import adminRouter from "./routers/adminRouter.js";
 app.use(adminRouter);
 
 const PORT = 8080 || process.env.PORT;

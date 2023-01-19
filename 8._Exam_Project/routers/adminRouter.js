@@ -1,9 +1,10 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
-const router = Router();
 import db from "../database/mysql_connection.js";
 import { renderPage } from "../util/templateEngine.js";
 import rateLimit from "express-rate-limit";
+
+const router = Router();
 
 const loginPage = renderPage("/adminLoginPage/adminLoginPage.html");
 const homePage = renderPage("/adminHomePage/adminHomePage.html");

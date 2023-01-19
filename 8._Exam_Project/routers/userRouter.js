@@ -1,9 +1,10 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
-const router = Router();
 import db from "../database/mysql_connection.js";
 import { renderPage } from "../util/templateEngine.js";
 import rateLimit from "express-rate-limit";
+
+const router = Router();
 
 const loginPage = renderPage("/loginPage/loginPage.html");
 const signupPage = renderPage("/loginPage/signupPage.html");
@@ -56,6 +57,6 @@ router.post("/login-form", async (req, res) => {
     }
     
 });
-//const [rows, fields] = await db.query("SELECT * FROM usertabel;");
+
 
 export default router;
