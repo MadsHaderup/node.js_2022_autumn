@@ -19,7 +19,12 @@ router.get("/admin", loginLimiter, (req, res) => {
 });
 
 router.get("/adminHomePage", (req, res) => {
-    res.send(homePage);
+    if(req.session.adminLoggedIn){
+        res.send(homePage);
+    } else {
+        res.redirect("/admin");
+    }
+    
 })
 
 router.post("/admin-login-form", async (req, res) => {

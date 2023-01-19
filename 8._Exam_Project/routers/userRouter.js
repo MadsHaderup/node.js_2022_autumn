@@ -15,8 +15,13 @@ const loginLimiter = rateLimit({
 });
 
 router.get("/user", async (req, res) => {
-    const [users, _] = await db.query("SELECT * FROM usertabel;");
-    res.send({ data: users});
+    if(req.session.adminLoggedIn){
+        const [users, _] = await db.query("SELECT * FROM usertabel;");
+        res.send({ data: users});
+    } else {
+        res.redirect("/admin");
+    }
+    
 });
 
 router.get("/login", loginLimiter, (req, res) => {
